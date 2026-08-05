@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metercontrol | Muayene Kontrol Sistemi</title>
+<style>
+:root {
+  --ink: #172033;
+  --muted: #647086;
+  --line: #d9e1ec;
+  --surface: #ffffff;
+  --soft: #f4f7fb;
+  --navy: #14315f;
+  --blue: #2d6cdf;
+  --green: #16805b;
+  --amber: #b76a16;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+  background: #eef3f9;
+}
+.shell { max-width: 1120px; margin: 0 auto; padding: 28px 18px 36px; }
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.brand { font-size: 1.25rem; font-weight: 750; color: var(--navy); }
+.status {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .9rem;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 26px;
+  align-items: center;
+  padding: 34px 0 28px;
+}
+h1 { margin: 0; font-size: clamp(2rem, 4vw, 4rem); line-height: 1.02; color: var(--navy); letter-spacing: 0; }
+.lead { margin: 16px 0 0; max-width: 660px; color: var(--muted); font-size: 1.08rem; line-height: 1.55; }
+.meter-visual {
+  min-height: 270px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(45,108,223,.14), rgba(22,128,91,.12)),
+    repeating-linear-gradient(90deg, transparent 0 26px, rgba(20,49,95,.07) 27px 28px),
+    #fff;
+  position: relative;
+  overflow: hidden;
+}
+.gauge {
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border: 18px solid #dce5ef;
+  border-bottom-color: var(--blue);
+  border-left-color: var(--green);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -45%);
+}
+.needle {
+  position: absolute;
+  width: 86px;
+  height: 4px;
+  background: var(--navy);
+  left: calc(50% - 6px);
+  top: 52%;
+  transform-origin: 6px center;
+  transform: rotate(-24deg);
+}
+.modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.card {
+  display: block;
+  min-height: 180px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover, .card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(23,32,51,.12);
+  border-color: var(--blue);
+  outline: none;
+}
+.tag { font-size: .78rem; font-weight: 750; color: var(--blue); }
+.card h2 { margin: 12px 0 8px; color: var(--navy); font-size: 1.25rem; }
+.card p { margin: 0; color: var(--muted); line-height: 1.48; }
+.footer { margin-top: 26px; color: var(--muted); font-size: .88rem; }
+@media (max-width: 760px) {
+  .topbar, .hero { display: block; }
+  .status { display: inline-block; margin-top: 10px; }
+  .meter-visual { margin-top: 22px; min-height: 220px; }
+  .modules { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topbar">
+    <div class="brand">Metercontrol</div>
+    <div class="status">Tarayıcıda çalışır, veri kaydetmez</div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <h1>Muayene Kontrol Sistemi</h1>
+      <p class="lead">Basınç ölçer ve hacim ölçek muayenelerinde temel hesapları hızlı, okunabilir ve yazdırılabilir şekilde yapın.</p>
+    </div>
+    <div class="meter-visual" aria-hidden="true">
+      <div class="gauge"></div>
+      <div class="needle"></div>
+    </div>
+  </section>
+
+  <section class="modules" aria-label="Muayene modülleri">
+    <a class="card" href="basinc.html">
+      <span class="tag">MODÜL 01</span>
+      <h2>Basınç Ölçer Muayenesi</h2>
+      <p>Ölçüm noktası önerisi, birim dönüşümü, MİH hesabı ve uygunluk özeti.</p>
+    </a>
+    <a class="card" href="hacim.html">
+      <span class="tag">MODÜL 02</span>
+      <h2>Hacim Ölçek Muayenesi</h2>
+      <p>Volumetrik yöntemle hata hesabı, sıcaklık düzeltmesi ve sonuç değerlendirmesi.</p>
+    </a>
+  </section>
+
+  <p class="footer">GitHub Pages için statik HTML proje.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacim Ölçek Muayenesi | Metercontrol</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="wrapper">
+  <div class="toolbar">
+    <a class="btn btn-ghost" href="index.html">← Ana Sayfa</a>
+    <div class="actions">
+      <button class="btn btn-ghost" type="button" onclick="temizleForm()">Temizle</button>
+      <button class="btn btn-primary" type="button" onclick="hesapla()">Hesapla</button>
+      <button class="btn btn-ghost" type="button" onclick="window.print()">Yazdır</button>
+    </div>
+  </div>
+
+  <h1>Hacim Ölçek Muayene Formu</h1>
+  <p class="subtitle">Volumetrik yöntemle hata hesabı, sıcaklık düzeltmesi ve uygunluk özeti.</p>
+
+  <section class="grid">
+    <article class="panel">
+      <h2>1. Genel Bilgiler</h2>
+      <div class="form-row">
+        <label>Doküman Ref No <input id="docNo" type="text" placeholder="Örn: HM-2026-014"></label>
+        <label>Tarih <input id="date" type="date"></label>
+        <label>Doğruluk Sınıfı (MİH %)
+          <select id="mih">
+            <option value="0.3">±0.30</option>
+            <option value="0.5">±0.50</option>
+            <option value="1">±1.00</option>
+            <option value="1.5">±1.50</option>
+            <option value="2">±2.00</option>
+          </select>
+        </label>
+        <label>Sıcaklık Düzeltmesi
+          <select id="tempMode">
+            <option value="on">Açık</option>
+            <option value="off">Kapalı</option>
+          </select>
+        </label>
+      </div>
+      <p id="tempNote" class="help">Sıcaklık düzeltmesi açıkken Tm ve Tref farkına göre Vref@(L) hesaplanır.</p>
+    </article>
+
+    <article class="panel">
+      <h2>2. Ölçüm Tablosu</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Debi Noktası</th><th>Vm (L)</th><th>Vref (L)</th>
+              <th class="temp-col">Tm (°C)</th><th class="temp-col">Tref (°C)</th>
+              <th class="vcorr-col">Vref@(L)</th><th>E (%)</th><th>Sonuç</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Qmin</b></td><td><input id="vs1" type="number" step="0.001" min="0"></td><td><input id="vref1" type="number" step="0.001" min="0"></td><td class="temp-col"><input id="tr1" type="number" step="0.1"></td><td class="temp-col"><input id="tref1" type="number" step="0.1"></td><td id="vcorr1" class="result-empty vcorr-col">-</td><td id="e1" class="result-empty">-</td><td id="s1" class="result-empty">Bekliyor</td></tr>
+            <tr><td><b>Qmax</b></td><td><input id="vs2" type="number" step="0.001" min="0"></td><td><input id="vref2" type="number" step="0.001" min="0"></td><td class="temp-col"><input id="tr2" type="number" step="0.1"></td><td class="temp-col"><input id="tref2" type="number" step="0.1"></td><td id="vcorr2" class="result-empty vcorr-col">-</td><td id="e2" class="result-empty">-</td><td id="s2" class="result-empty">Bekliyor</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <b>Not:</b> Sıcaklık düzeltmesi aktifken referans hacim
+        <b>β = 0,00021 °C⁻¹</b> katsayısı üzerinden
+        <b>Vref@ = Vref x (1 + β x (Tref - Tm))</b> bağıntısıyla sıcaklığa göre
+        normalize edilir; devre dışıyken doğrudan Vref esas alınır. Bağıl hata
+        <b>E = ((Vm - Vref@) / Vref@) x 100</b> formülüyle hesaplanır. Uygunluk
+        kriteri: <b>|E| &le; MİH -> U</b>, <b>|E| &gt; MİH -> UD</b>.
+      </div>
+    </article>
+
+    <article class="panel">
+      <h2>3. Muayene Özeti</h2>
+      <div class="summary">
+        <div class="kpi"><span>Toplam Nokta</span><strong id="totalPoint">0</strong></div>
+        <div class="kpi"><span>Uygun Nokta</span><strong id="okPoint">0</strong></div>
+        <div class="kpi"><span>Genel Durum</span><strong id="overall">Bekliyor</strong></div>
+      </div>
+    </article>
+  </section>
+</main>
+<script src="hacim.js"></script>
+</body>
+</html>
